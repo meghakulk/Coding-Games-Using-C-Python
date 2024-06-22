@@ -1,3 +1,36 @@
+Input for a turn
+Line 1 : 11 integers id, playerCount, turn, income, cash, devs, sellers, managers, features, tests and bugs where:
+
+id : your startUp id
+playerCount : number of players
+turn : number of turn since the beginning
+income : your income for this turn
+cash : cash of your start-up
+devs : developers employees of your start-up
+sellers : sellers employees of your start-up
+managers : managers employees of your start-up
+features : features developed in your software
+tests : tests developed in your software
+bugs : bugs in your software
+playerCount following lines : one line for each player. First line is for player 0, next one for player 1, etc. Each line contains 3 integers startUpId start-up id, marketShare start-up market share in thousandths and reputation start-up reputation
+
+Output for a turn
+One line containing 5 or 6 integers separated by space devsToHire, sellersToHire, managersToHire, maintenanceDevs, competitiveSellers and targetId which is optional
+Constraints for output values:
+
+-1 ≤ managersToHire ≤ 1
+|devsToHire| + |sellersToHire| ≤ 2 × managers where |n| means absolute value of n
+0 ≤ maintenanceDevs ≤ devs + devsToHire
+0 ≤ competitiveSellers ≤ sellers + sellersToHire
+devs + devsToHire + sales + salesToHire ≤ 10 × managers
+devsToHire: number of developers you want to hire for next round, it can be negative.
+sellersToHire: number of sellers you want to hire for next round, it can be negative.
+managersToHire: number of managers you want to hire for next round, it can be negative.
+maintenanceDevs: number of your developers affected to fix bugs and increase tests.
+Beware tests number can be increased only if a feature already exists or has been developed during the turn.
+competitiveSellers: sellers that will try to steal market share from competitors.
+targetId must be a startUp id (different from your id). This output is optional.
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
