@@ -1,0 +1,99 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+/**
+ * Get the market!
+ **/
+
+int main() {
+    // game loop
+    while (1) {
+        // Your player id
+        int id;
+        scanf("%d", &id);
+        // Number of players
+        int player_count;
+        scanf("%d", &player_count);
+        // Number of turns since the beginning
+        int turn;
+        scanf("%d", &turn);
+        // Your income for this turn
+        int income;
+        scanf("%d", &income);
+        // Cash of your start-up
+        int cash;
+        scanf("%d", &cash);
+        int devs;
+        scanf("%d", &devs);
+        int sellers;
+        scanf("%d", &sellers);
+        int managers;
+        scanf("%d", &managers);
+        int features;
+        scanf("%d", &features);
+        // Tests developed in your software
+        int tests;
+        scanf("%d", &tests);
+        // Bugs in your software
+        int bugs;
+        scanf("%d", &bugs);
+        
+        int playerData[player_count][3];
+        for (int i = 0; i < player_count; i++) {
+            // Start-up id
+            int start_up_id;
+            // Market share of the start-up in thousands
+            int market_share;
+            // Reputation of the start-up
+            int reputation;
+            scanf("%d%d%d", &start_up_id, &market_share, &reputation);
+            playerData[i][0] = start_up_id;
+            playerData[i][1] = market_share;
+            playerData[i][2] = reputation;
+        }
+
+        // Decision variables
+        int devsToHire = 0;
+        int sellersToHire = 0;
+        int managersToHire = 0;
+        int maintenanceDevs = 0;
+        int competitiveSellers = 0;
+        int targetId = -1;
+
+        // Example strategy for hiring
+        if (cash > 1000) { // Simplified condition for hiring based on available cash
+            devsToHire = 1;
+            if (managers * 10 < devs + devsToHire + sellers) {
+                managersToHire = 1; // Hire manager if needed for balancing the team
+            } else {
+                sellersToHire = 1;
+            }
+        }
+
+        // Allocate developers for maintenance (simple strategy: half of current developers)
+        maintenanceDevs = devs / 2;
+
+        // Use sellers competitively if we have enough cash
+        competitiveSellers = sellers;
+
+        // Target a competitor based on the lowest market share (excluding self)
+        int lowestMarketShare = 100000; // arbitrary high number for initialization
+        for (int i = 0; i < player_count; i++) {
+            if (playerData[i][0] != id && playerData[i][1] < lowestMarketShare) {
+                lowestMarketShare = playerData[i][1];
+                targetId = playerData[i][0];
+            }
+        }
+
+        // Output the decision
+        if (targetId != -1) {
+            printf("%d %d %d %d %d %d\n", devsToHire, sellersToHire, managersToHire, maintenanceDevs, competitiveSellers, targetId);
+        } else {
+            printf("%d %d %d %d %d\n", devsToHire, sellersToHire, managersToHire, maintenanceDevs, competitiveSellers);
+        }
+    }
+
+    return 0;
+}
